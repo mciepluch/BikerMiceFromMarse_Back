@@ -19,7 +19,7 @@ class TravelSessionsController < ApplicationController
     if travel_session.update(travel_session_update_params)
       points = (travel_session.end_station - travel_session.start_station) * POINTS_MULTIPLY
       final_points = points.positive? ? points : -points
-      @point_history = current_user.history_points.create(points: final_points, start_station: travel_session.start_station, end_station: travel_session.end_station)
+      @point_history = current_user.history_points.create(points: final_points, travel_tool: travel_session.travel_tool, start_station: travel_session.start_station, end_station: travel_session.end_station)
       current_user.points += final_points
       if @point_history.save && travel_session.destroy && current_user.save
         render status: :ok
@@ -38,7 +38,7 @@ class TravelSessionsController < ApplicationController
   end
 
   def travel_session_create_params
-    params.require(:travel_session).permit(:start_station)
+    params.require(:travel_session).permit(:start_station, :travel_tool)
   end
 
   def travel_session_update_params
