@@ -31,7 +31,7 @@ class TravelSessionsController < ApplicationController
   end
 
   def delete
-    if current_user.travel_session.destroy
+    if current_user.travel_session && cucurrent_user.travel_session.destroy
       render status: :ok
     else
       render status: :unprocessable_entity
