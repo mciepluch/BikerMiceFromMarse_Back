@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :history_points, only: [:index]
-  post '/users/update_points', to:'points#update_points'
+  resources :travel_sessions, only: %i[index create update]
+  patch '/update_travel_sessions', to: 'travel_sessions#update'
+  delete '/delete_travel_sessions', to: 'travel_sessions#delete'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

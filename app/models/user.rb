@@ -7,4 +7,5 @@ class User < ApplicationRecord
 
   validates :name, :lastname, presence: true
   has_many :history_points
+  has_one :travel_session
 end
