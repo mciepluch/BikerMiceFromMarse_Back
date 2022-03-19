@@ -8,7 +8,7 @@ class TravelSessionsController < ApplicationController
   def create
     travel_session = current_user.create_travel_session(travel_session_create_params)
     if travel_session.save
-      render json: travel_session, status: :ok
+      render json: travel_session, status: :created
     else
       render status: :unprocessable_entity
     end
