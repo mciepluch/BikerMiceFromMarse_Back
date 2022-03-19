@@ -15,6 +15,7 @@ class TravelSessionsController < ApplicationController
       travel_session = current_user.create_travel_session(travel_session_create_params)
       if travel_session.save
         render json: travel_session, status: :created
+        return
       end
     end
 
@@ -23,7 +24,7 @@ class TravelSessionsController < ApplicationController
 
   def update
     travel_session = current_user.travel_session
-    if travel_session.update(travel_session_update_params)
+    if travel_session && travel_session.update(travel_session_update_params)
       points = (travel_session.end_station - travel_session.start_station) * POINTS_MULTIPLY
       final_points = points.positive? ? points : -points
       @point_history = current_user.history_points.create(history_type: TRAVEL_HISTORY_POINT_TYPE, points: final_points, start_datetime: travel_session.created_at, category: travel_session.travel_tool, start_station: travel_session.start_station, end_station: travel_session.end_station)
