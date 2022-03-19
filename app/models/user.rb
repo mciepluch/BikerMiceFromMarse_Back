@@ -8,4 +8,6 @@ class User < ApplicationRecord
   validates :name, :lastname, presence: true
   has_many :history_points
   has_one :travel_session
+  has_many :users_prizes
+  has_many :prizes, through: :users_prizes
 end

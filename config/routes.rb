@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   patch '/update_travel_sessions', to: 'travel_sessions#update'
   delete '/delete_travel_sessions', to: 'travel_sessions#delete'
   resources :prizes
+  resources :users_prizes
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

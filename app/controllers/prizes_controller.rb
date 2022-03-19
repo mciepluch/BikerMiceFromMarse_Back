@@ -4,7 +4,7 @@ class PrizesController < ApplicationController
   def index
     page = params[:page] || 1
     current_records = Prize.all.page(page).per(15)
-    render json: { resources: current_records, total: current_records.total_pages, current_page: current_records.current_page }, status: :ok
+    render json: { users_prizes: current_records, total: current_records.total_pages, current_page: current_records.current_page }, status: :ok
   end
 
   def create

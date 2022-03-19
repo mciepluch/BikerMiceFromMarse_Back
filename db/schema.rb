@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_19_021407) do
+ActiveRecord::Schema.define(version: 2022_03_19_030028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,14 @@ ActiveRecord::Schema.define(version: 2022_03_19_021407) do
     t.bigint "points", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "users_prizes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "prize_id"
+    t.integer "duration_left", null: false
+    t.index ["prize_id"], name: "index_users_prizes_on_prize_id"
+    t.index ["user_id"], name: "index_users_prizes_on_user_id"
   end
 
 end
