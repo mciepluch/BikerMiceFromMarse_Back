@@ -3,12 +3,16 @@ class TravelSessionsController < ApplicationController
   TRAVEL_HISTORY_POINT_TYPE = 0
 
   def index
-    render json: current_user.travel_session, status: :ok
+    if current_user.travel_session
+      render json: current_user.travel_session, status: :ok
+    else
+      render status: :unprocessable_entity
+    end
   end
 
   def create
     travel_session = current_user.create_travel_session(travel_session_create_params)
-    if travel_session.save
+    if !current_user.travel_session && travel_session.save
       render json: travel_session, status: :created
     else
       render status: :unprocessable_entity
