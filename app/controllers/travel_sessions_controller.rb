@@ -11,12 +11,14 @@ class TravelSessionsController < ApplicationController
   end
 
   def create
-    travel_session = current_user.create_travel_session(travel_session_create_params)
-    if !current_user.travel_session && travel_session.save
-      render json: travel_session, status: :created
-    else
-      render status: :unprocessable_entity
+    unless current_user.travel_session
+      travel_session = current_user.create_travel_session(travel_session_create_params)
+      if travel_session.save
+        render json: travel_session, status: :created
+      end
     end
+
+    render status: :unprocessable_entity
   end
 
   def update
