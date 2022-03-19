@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_19_075946) do
+ActiveRecord::Schema.define(version: 2022_03_19_081703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2022_03_19_075946) do
     t.integer "start_station"
     t.integer "end_station"
     t.integer "travel_tool"
+    t.datetime "start_datetime"
     t.index ["user_id"], name: "index_history_points_on_user_id"
   end
 
