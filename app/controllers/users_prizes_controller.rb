@@ -17,7 +17,7 @@ class UsersPrizesController < ApplicationController
     if new_prize.save && current_user.save
       render status: :ok
     else
-      render status: :unprocessable_entity
+      render json: new_prize.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -25,7 +25,7 @@ class UsersPrizesController < ApplicationController
     if @prize.update(user_prize_params_update)
       render status: :ok
     else
-      render status: :unprocessable_entity
+      render json: @prize.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -37,7 +37,7 @@ class UsersPrizesController < ApplicationController
     if @prize.destroy
       render status: :ok
     else
-      render status: :unprocessable_entity
+      render json: @prize.errors.full_messages, status: :unprocessable_entity
     end
   end
 

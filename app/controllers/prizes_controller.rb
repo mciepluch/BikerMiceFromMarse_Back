@@ -12,7 +12,7 @@ class PrizesController < ApplicationController
     if prize.save
       render json: prize, status: :created
     else
-      render status: :unprocessable_entity
+      render json: prize.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -24,7 +24,7 @@ class PrizesController < ApplicationController
     if @prize.update(prize_params)
       render status: :ok
     else
-      render status: :unprocessable_entity
+      render json: @prize.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -32,7 +32,7 @@ class PrizesController < ApplicationController
     if @prize.destroy
       render status: :ok
     else
-      render status: :unprocessable_entity
+      render json: @prize..errors.full_messages, status: :unprocessable_entity
     end
   end
 

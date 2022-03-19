@@ -16,6 +16,8 @@ class TravelSessionsController < ApplicationController
       if travel_session.save
         render json: travel_session, status: :created
         return
+      else
+        render json: travel_session.errors.full_messages, status: :unprocessable_entity
       end
     end
 
@@ -30,7 +32,7 @@ class TravelSessionsController < ApplicationController
       @point_history = current_user.history_points.create(history_type: TRAVEL_HISTORY_POINT_TYPE, points: final_points, start_datetime: travel_session.created_at, category: travel_session.travel_tool, start_station: travel_session.start_station, end_station: travel_session.end_station)
       current_user.points += final_points
       if @point_history.save && travel_session.destroy && current_user.save
-        render status: :ok
+        render json: { updated_points: current_user.points }, status: :ok
         return
       end
     end
@@ -38,7 +40,7 @@ class TravelSessionsController < ApplicationController
   end
 
   def delete
-    if current_user.travel_session && cucurrent_user.travel_session.destroy
+    if current_user.travel_session && current_user.travel_session.destroy
       render status: :ok
     else
       render status: :unprocessable_entity
