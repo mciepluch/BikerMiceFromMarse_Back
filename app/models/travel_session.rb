@@ -8,6 +8,6 @@ class TravelSession < ApplicationRecord
     'tram': 3,
     'metro': 4
   }
-  
+
   validates :travel_tool, presence: true
 end

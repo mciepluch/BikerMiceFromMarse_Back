@@ -3,7 +3,7 @@ class HistoryPoint < ApplicationRecord
 
   enum history_type: {
     'travel': 0,
-    'purchase': 1,
+    'purchase': 1
   }
 
   enum category: {
