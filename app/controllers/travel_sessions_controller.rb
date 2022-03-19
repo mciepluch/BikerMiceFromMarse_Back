@@ -1,6 +1,7 @@
 class TravelSessionsController < ApplicationController
   POINTS_MULTIPLY = 10
   TRAVEL_HISTORY_POINT_TYPE = 0
+  AVERAGE_CO2_PER_STATION = 0.120
 
   def index
     if current_user.travel_session
@@ -27,12 +28,13 @@ class TravelSessionsController < ApplicationController
   def update
     travel_session = current_user.travel_session
     if travel_session && travel_session.update(travel_session_update_params)
-      points = (travel_session.end_station - travel_session.start_station) * POINTS_MULTIPLY
-      final_points = points.positive? ? points : -points
+      traveled_stations = (travel_session.end_station - travel_session.start_station).abs
+      final_points = traveled_stations * POINTS_MULTIPLY
       @point_history = current_user.history_points.create(history_type: TRAVEL_HISTORY_POINT_TYPE, points: final_points, start_datetime: travel_session.created_at, category: travel_session.travel_tool, start_station: travel_session.start_station, end_station: travel_session.end_station)
       current_user.points += final_points
+      current_user.total_carbon_saved += AVERAGE_CO2_PER_STATION * traveled_stations
       if @point_history.save && travel_session.destroy && current_user.save
-        render json: { updated_points: current_user.points }, status: :ok
+        render json: { updated_points: current_user.points, updated_carbon_saved: current_user.total_carbon_saved }, status: :ok
         return
       end
     end
