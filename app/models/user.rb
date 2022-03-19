@@ -6,4 +6,5 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenyList
 
   validates :name, :lastname, presence: true
+  has_many :history_points
 end
